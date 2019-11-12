@@ -18,6 +18,7 @@ Ideally, we agree:
 
 #### MongoToCSVOperator
 
+#### RegExLabellingOperator
 
 ## Tests & Examples
 
