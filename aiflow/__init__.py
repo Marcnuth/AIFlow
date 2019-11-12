@@ -1,5 +1,6 @@
 import logging
 from logging.config import dictConfig
+import os
 
 
 dictConfig({
@@ -23,7 +24,7 @@ dictConfig({
         "aiflow": {
             "handlers": ["console"],
             "propagate": "true",
-            "level": "WARN"
+            "level": "DEBUG" if os.getenv('DEBUG_MODE', True) else 'WARN'
         }
     }
 })
