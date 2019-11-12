@@ -3,6 +3,12 @@
 ## Introduction
 AI Flow, which offers various reusable operators & processing units in AI modeling, helps AI engineer to write less, reuse more, integrate easily.
 
+## Install
+
+```
+pip install aiflow
+```
+
 
 ## Concepts
 
