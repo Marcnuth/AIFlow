@@ -8,9 +8,9 @@ AI Flow, which offers various reusable operators & processing units in AI modeli
 
 ### Operators VS. Units
 
-Ideally, we think:
-- An operator would contain lot of units, which will be integrated into `airflow` for building non-realtime processing workflow;
-- A unit is a small calculation unit, which could be a function, or just a simple modeling logic, which could be taken as bricks to build an operator. Also, it could be reused anywhere for realtime calculation.
+Ideally, we agree:
+- An **Operator** would contain lot of units, which will be integrated into `airflow` for building non-realtime processing workflow;
+- A **Unit** is a small calculation unit, which could be a function, or just a simple modeling logic, and it could be picked as bricks to build an operator. Besides, it could be reused anywhere for realtime calculation.
 
 ## Classes
 
@@ -38,3 +38,5 @@ Then open `localhost:8080` in your browser, you can see all the examples `aiflow
 Note: both the default username & password are `admin`
 
 Enjoy!
+
+## Contribution

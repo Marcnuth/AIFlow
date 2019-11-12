@@ -2,3 +2,4 @@ apache-airflow
 pymongo
 pathlib
 dictor
+pandas

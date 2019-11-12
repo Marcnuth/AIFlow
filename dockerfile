@@ -27,6 +27,7 @@ ENV DEBUG_MODE 1
 COPY tests/docker/dags/ /marcnuth/airflow/dags/
 COPY tests/docker/config/airflow.cfg /marcnuth/airflow/
 COPY tests/docker/entrypoint.sh /marcnuth/
+COPY tests/resources /resources/
 COPY aiflow /marcnuth/aiflow
 
 RUN airflow initdb
