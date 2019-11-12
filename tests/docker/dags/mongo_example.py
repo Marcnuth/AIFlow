@@ -35,9 +35,9 @@ export2file = MongoToCSVOperator(
     mongo_collection='lead',
     mongo_database='mg_prod',
     mongo_query={"title": {"$exists": True}},
-    output_fields=['title', 'contactInfo'],
+    output_fields=['title'],
     output_file='/tmp/export.csv',
-    limit=10,
+    limit=1000000,
     op_kwargs=dict()
 )
 

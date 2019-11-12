@@ -51,3 +51,6 @@ class MongoToCSVOperator(BaseOperator):
 
                 f.write(','.join(data) + '\n')
                 f.flush()
+
+                if i % 10000 == 0:
+                    logger.debug(f'already wrote {i} lines data, limit: {self.limit}.')
