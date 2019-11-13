@@ -1,4 +1,4 @@
-from . import Unit
+from aiflow.units import Unit
 import logging
 import string
 import re
@@ -25,14 +25,21 @@ class Doc2VecUnit(Unit):
         self.lemmatize = kwargs.get('lemmatize', False)
 
         # todo: support load from website
-        self.word2vec = KeyedVectors.load_word2vec_format(Path(word2vec_model_url).absolute().as_posix())
+        self.word2vec_file = word2vec_model_url
+        self.word2vec = None
 
         self.n_ouput_dim = kwargs.get('n_ouput_dim', 300)
 
     def execute(self, **kwargs):
 
+        # lazy load, otherwise it will time out when initialization
+        if not self.word2vec:
+            logger.debug('start loading word2vec model...')
+            self.word2vec = KeyedVectors.load_word2vec_format(Path(self.word2vec_file).absolute().as_posix())
+            logger.debug('finish loading word2vec model')
+
         words = self._sentence_to_words(kwargs.get('sentence', '').strip())
-        vectors = list(filter(bool, map(self._safe_word_to_vector, words)))
+        vectors = list(filter(lambda x: x is not None, map(self._safe_word_to_vector, words)))
         if not vectors:
             return np.zeros(self.n_ouput_dim)
 
@@ -42,8 +49,8 @@ class Doc2VecUnit(Unit):
         if not sentence or not sentence.strip():
             return sentence
 
-        s = sentence.lower() if self.ower else sentence
-        s = s.strip().replace('-', self.hyphen_replacement)
+        s = sentence.lower() if self.lower else sentence
+        s = s.strip().replace('-', self.hyphen_replacement) if self.hyphen_replacement is not None else s
 
         words = re.split(r'[\s{}]'.format(string.punctuation), s)
         words = list(filterfalse(str.isnumeric, words)) if self.remove_numeric else words

@@ -42,7 +42,10 @@ class TextClassificationDataBuildOperator(BaseOperator):
         X = np.zeros((df.shape[0], n_vector_dim))
         for i, row in df.iterrows():
             X[i, ] = self.doc2vec.execute(sentence=row[self.data_column])
+            if i % 10000 == 0:
+                logger.debug('finish embedding X for {i} rows')
 
+        logger.debug('start embedding Y...')
         dummies = pd.get_dummies(df[self.label_column])
         Y = dummies.to_numpy()
         lookup = dummies.idxmax(axis=1)
