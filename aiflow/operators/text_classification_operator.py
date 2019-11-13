@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 from bson import json_util
 from aiflow.hooks.mongo_hook import MongoHook
-from aiflow.units.doc2vec_unit import Doc2VecUnit
+from aiflow.units.doc2mat_unit import Doc2MatUnit
 import logging
 import pandas as pd
 import numpy as np
@@ -30,7 +30,8 @@ class TextClassificationDataBuildOperator(BaseOperator):
         assert self.input_file.name.lower().endswith('csv'), f'"csv" input file required'
         assert self.input_file.exists() and self.input_file.is_file, f'invalid input_file: {input_file}'
 
-        self.doc2vec = Doc2VecUnit(word2vec_file, *args, **kwargs)
+        n_max_words_count = kwargs.get('n_max_words_count', 5)
+        self.doc2mat = Doc2MatUnit(n_max_words_count, word2vec_file, *args, **kwargs)
 
     def execute(self, context):
         logger.debug('start TextClassificationDataBuildOperator ...')
@@ -50,7 +51,8 @@ class TextClassificationDataBuildOperator(BaseOperator):
         ohlabels.idxmax(axis=1).to_json(self.output_extra_file)
 
         for i, row in df.iterrows():
-            x = self.doc2vec.execute(sentence=row[self.data_column])
+            val = row[self.data_column]
+            x = self.doc2mat.execute(sentence='' if pd.isna(val) else val)
             y = ohlabels.iloc[i].to_numpy()
             np.savez((self.output_data_dir / f'{i}.npz').absolute().as_posix(), x=x, y=y)
             if i % 10000 == 0:
