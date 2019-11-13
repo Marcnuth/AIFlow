@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 class RegExLabellingOperator(BaseOperator):
     """
-    This operator allows you to read data from mongo, and write to a file
+    This operator allows you to label data based on regex rules
     """
 
     class RegExRules:
@@ -24,14 +24,13 @@ class RegExLabellingOperator(BaseOperator):
         def __init__(self, rules, unmatch_label, re_flags):
             self._unmatch_label = unmatch_label
             self._rules = [self.Rule(regex=r[0], label=r[1]) for r in rules]
-            self._re_flags= re_flags
+            self._re_flags = re_flags
 
         def label(self, text):
             if not text or not isinstance(text, str):
                 return self._unmatch_label
 
             return next((rule.label for rule in self._rules if re.search(rule.regex, text, self._re_flags)), self._unmatch_label)
-
 
     def __init__(self, input_file, data_column, regex_rules, label_column, output_file, *args, **kwargs):
         super(RegExLabellingOperator, self).__init__(*args, **kwargs)
@@ -55,5 +54,5 @@ class RegExLabellingOperator(BaseOperator):
 
         df = pd.read_csv(self.input_file)
         df[self.label_column] = df[self.data_column].map(self.regex_rules.label)
-    
+
         df.to_csv(self.output_file, index=False, header=True)
