@@ -4,7 +4,7 @@ import json
 from bson import json_util
 from aiflow.hooks.mongo_hook import MongoHook
 import logging
-from dictor import dictor
+from jsonpath import jsonpath
 
 
 logger = logging.getLogger(__name__)
@@ -46,7 +46,7 @@ class MongoToCSVOperator(BaseOperator):
                     break
 
                 # todo: escape the string in streaming writing way
-                data = [dictor(doc, field, default='') for field in self.output_fields]
+                data = [self._value_of(doc, field, default='') for field in self.output_fields]
                 data = list(map(lambda x: x if isinstance(x, str) else json.dumps(x), data))
 
                 f.write(','.join(data) + '\n')
@@ -54,3 +54,10 @@ class MongoToCSVOperator(BaseOperator):
 
                 if i % 10000 == 0:
                     logger.debug(f'already wrote {i} lines data, limit: {self.limit}.')
+
+    def _value_of(self, doc, field, default=None):
+        try:
+            found = jsonpath(doc, field)
+            return found[0] if found else default
+        except:
+            return default

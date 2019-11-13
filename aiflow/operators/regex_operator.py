@@ -4,7 +4,6 @@ import json
 from bson import json_util
 from aiflow.hooks.mongo_hook import MongoHook
 import logging
-from dictor import dictor
 from collections import namedtuple
 import pandas as pd
 import re
