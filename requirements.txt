@@ -1,5 +1,8 @@
 apache-airflow
 pymongo
 pathlib
-dictor
+jsonpath
 pandas
+numpy
+gensim
+nltk
