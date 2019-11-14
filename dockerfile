@@ -36,8 +36,8 @@ COPY tests/docker/dags/ /marcnuth/airflow/dags/
 COPY tests/docker/config/airflow.cfg /marcnuth/airflow/
 COPY tests/docker/entrypoint.sh /marcnuth/
 
-RUN airflow initdb
-RUN airflow create_user -r Admin -u admin -p admin -e marcnuth@foxmail.com -f dev -l aiflow
+# RUN airflow initdb
+# RUN airflow create_user -r Admin -u admin -p admin -e marcnuth@foxmail.com -f dev -l aiflow
 
 #ENTRYPOINT ["tail", "-f","/dev/null"]
 ENTRYPOINT ["sh", "/marcnuth/entrypoint.sh"]
