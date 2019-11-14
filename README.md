@@ -26,6 +26,12 @@ Ideally, we agree:
 
 #### RegExLabellingOperator
 
+### Units
+
+#### Doc2VecUnit
+
+#### Doc2MatUnit
+
 ## Tests & Examples
 
 ### Example: Use Units to Build Your Castle
