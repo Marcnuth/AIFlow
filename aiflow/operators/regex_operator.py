@@ -41,7 +41,7 @@ class RegExLabellingOperator(BaseOperator):
         self.output_file = Path(output_file)
 
         assert self.input_file.name.lower().endswith('csv'), f'"csv" input file required'
-        assert self.input_file.exists() and self.input_file.is_file, f'invalid input_file: {input_file}'
+        assert self.input_file.exists() and self.input_file.is_file(), f'invalid input_file: {input_file}'
         assert isinstance(self.regex_rules, self.RegExRules), f'regex_rules should be instance of RegExRules'
 
     def execute(self, context):

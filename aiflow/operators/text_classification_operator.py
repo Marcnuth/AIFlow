@@ -27,7 +27,7 @@ class TextClassificationDataBuildOperator(BaseOperator):
         self.output_data_dir = Path(output_data_dir)
         self.output_extra_file = Path(output_extra_file)
 
-        assert self.input_file.name.lower().endswith('csv'), f'"csv" input file required'
+        assert self.input_file.name.lower().endswith('csv'), f'input file must be CSV.'
         assert self.input_file.exists() and self.input_file.is_file, f'invalid input_file: {input_file}'
 
         n_max_words_count = kwargs.get('n_max_words_count', 5)
