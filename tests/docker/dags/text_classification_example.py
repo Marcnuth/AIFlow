@@ -17,7 +17,7 @@ default_args = {
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
-    'retry_delay': timedelta(minutes=5),
+    'retry_delay': timedelta(minutes=10),
 }
 
 
@@ -34,8 +34,8 @@ seniorityDataset = TextClassificationDataBuildOperator(
     input_file='/resources/title_labels.csv',
     data_column='title',
     label_column='seniority',
-    output_data_dir='/tmp/seniority_data/',
-    output_extra_file='/tmp/seniority_data.json',
+    output_data_dir='/resources/titles/seniority_data/',
+    output_extra_file='/resources/titles/seniority_data.json',
     word2vec_file='/resources/crawl-300d-2M.vec'
 )
 
@@ -45,8 +45,8 @@ roleDataset = TextClassificationDataBuildOperator(
     input_file='/resources/title_labels.csv',
     data_column='title',
     label_column='role',
-    output_data_dir='/tmp/role_data/',
-    output_extra_file='/tmp/role_data.json',
+    output_data_dir='/resources/titles/role_data/',
+    output_extra_file='/resources/titles/role_data.json',
     word2vec_file='/resources/crawl-300d-2M.vec'
 )
 

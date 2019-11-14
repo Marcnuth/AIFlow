@@ -48,7 +48,10 @@ class TextClassificationDataBuildOperator(BaseOperator):
         n_vector_dim = 300
 
         ohlabels = pd.get_dummies(df[self.label_column])
-        ohlabels.idxmax(axis=1).to_json(self.output_extra_file)
+        with open(self.output_extra_file.absolute().as_posix(), 'w+') as f:
+            f.write(json.dumps(dict(
+                classes=list(ohlabels.columns)
+            )))
 
         for i, row in df.iterrows():
             val = row[self.data_column]
