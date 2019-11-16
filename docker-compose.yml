@@ -1,9 +1,0 @@
-version: "3"
-services:
-  aiflow:
-    image: aiflow
-    build: "./"
-    ports:
-      - "6006:8080"
-    volumes:
-      - "./tests/resources:/resources/"

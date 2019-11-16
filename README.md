@@ -24,6 +24,8 @@ Ideally, we agree:
 
 #### MongoToCSVOperator
 
+#### Elastic2CSVOperator
+
 #### RegExLabellingOperator
 
 ### Units
