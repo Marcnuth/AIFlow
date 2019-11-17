@@ -15,11 +15,12 @@ class Elastic2CSVOperator(BaseOperator):
     This operator allows you to read data from mongo, and write to a file
     """
 
-    def __init__(self, elastic_conn_id, elastic_index, output_fields, output_file, *args, **kwargs):
+    def __init__(self, elastic_conn_id, elastic_function, elastic_func_kwargs, output_fields, output_file, *args, **kwargs):
         super(Elastic2CSVOperator, self).__init__(*args, **kwargs)
 
         self.elastic_conn_id = elastic_conn_id
-        self.elastic_index = elastic_index
+        self.elastic_function = elastic_function
+        self.elastic_func_kwargs = elastic_func_kwargs
         self.output_fields = output_fields
         self.output_file = Path(output_file)
 
@@ -35,7 +36,7 @@ class Elastic2CSVOperator(BaseOperator):
 
         es = ElasticHook(self.elastic_conn_id).client()
 
-        res = es.search(index=self.elastic_index, q=self.elastic_search)
+        res = getattr(es, self.elastic_function)(**self.elastic_func_kwargs)
         hits = res['hits']
         if hits['total'] <= 0:
             logger.info(f'no hits found, no file will be exported. es result: {res}')

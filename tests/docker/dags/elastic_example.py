@@ -32,9 +32,12 @@ export2file = Elastic2CSVOperator(
     task_id='export2file',
     dag=dag,
     elastic_conn_id='elastic_default',
-    elastic_index='uba_behaviors',
-    elastic_search='*',
-    output_fields=['timestamp', 'message'],
+    elastic_function='search',
+    elastic_func_kwargs={
+        "index": "uba_behaviors",
+        "q": "action: CLICK"
+    },
+    output_fields=['timestamp', 'action', 'message'],
     output_file='/resources/exportFromES.csv',
     limit=10,
     op_kwargs=dict()
