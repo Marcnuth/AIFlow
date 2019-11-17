@@ -5,7 +5,7 @@ from pathlib import Path
 from airflow import DAG
 import airflow
 from datetime import timedelta
-from aiflow.operators import MongoToCSVOperator
+from aiflow.operators.mongo_operator import MongoToCSVOperator
 import logging
 
 

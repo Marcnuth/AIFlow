@@ -5,7 +5,7 @@ import os
 
 dictConfig({
     "version": 1,
-    "disable_existing_loggers": True,
+    "disable_existing_loggers": False,
     "formatters": {
         "basic": {
             "format": "[%(asctime)s] [%(process)d:%(thread)d] [%(levelname)s] [%(name)s] %(filename)s:%(funcName)s:%(lineno)d %(message)s",
@@ -25,12 +25,7 @@ dictConfig({
             "handlers": ["console"],
             "propagate": "true",
             "level": "DEBUG" if os.getenv('DEBUG_MODE', True) else 'WARN'
-        },
-        'airflow': {
-            "handlers": ["console"],
-            "propagate": "true",
-            "level": "INFO"
-        },
+        }
     }
 })
 

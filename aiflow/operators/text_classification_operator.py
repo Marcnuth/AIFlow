@@ -2,7 +2,6 @@ from airflow.models import BaseOperator
 from pathlib import Path
 import json
 from bson import json_util
-from aiflow.hooks.mongo_hook import MongoHook
 from aiflow.units.doc2mat_unit import Doc2MatUnit
 import logging
 import pandas as pd

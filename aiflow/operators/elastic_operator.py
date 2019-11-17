@@ -41,5 +41,25 @@ class Elastic2CSVOperator(BaseOperator):
             logger.info(f'no hits found, no file will be exported. es result: {res}')
             return
 
-        for h in hits['hits']:
-            logger.info(h['_source'])
+        with open(self.output_file.absolute().as_posix(), 'w+') as f:
+            f.write(','.join(self.output_fields) + '\n')
+            for i, doc in enumerate(hits['hits']):
+                if self.limit and i >= self.limit:
+                    break
+
+                # todo: escape the string in streaming writing way
+                data = [self._value_of(doc['_source'], field, default='') for field in self.output_fields]
+                data = list(map(lambda x: x if isinstance(x, str) else json.dumps(x), data))
+
+                f.write(','.join(data) + '\n')
+                f.flush()
+
+                if i % 10000 == 0:
+                    logger.debug(f'already wrote {i} lines data, limit: {self.limit}.')
+
+    def _value_of(self, doc, field, default=None):
+        try:
+            found = jsonpath(doc, field)
+            return found[0] if found else default
+        except:
+            return default

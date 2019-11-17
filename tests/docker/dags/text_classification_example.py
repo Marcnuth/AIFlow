@@ -5,7 +5,7 @@ from pathlib import Path
 from airflow import DAG
 import airflow
 from datetime import timedelta
-from aiflow.operators import TextClassificationDataBuildOperator
+from aiflow.operators.text_classification_operator import TextClassificationDataBuildOperator
 import logging
 
 

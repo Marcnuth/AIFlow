@@ -35,7 +35,7 @@ export2file = Elastic2CSVOperator(
     elastic_index='uba_behaviors',
     elastic_search='*',
     output_fields=['timestamp', 'message'],
-    output_file='/tmp/export.csv',
+    output_file='/resources/exportFromES.csv',
     limit=10,
     op_kwargs=dict()
 )
