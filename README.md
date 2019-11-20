@@ -1,5 +1,7 @@
 # AI Flow
 
+![](https://img.shields.io/pypi/v/aiflow)
+
 ## Introduction
 AI Flow, which offers various reusable operators & processing units in AI modeling, helps AI engineer to write less, reuse more, integrate easily.
 
