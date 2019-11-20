@@ -48,7 +48,7 @@ class Doc2MatUnit(Unit):
         if mat.shape[0] >= self.n_max_len:
             return mat[:self.n_max_len, :]
         else:
-            return np.pad(mat, ((0, self.n_max_len - mat.shape[0]), ), 'constant', constant_values=(0,))
+            return np.pad(mat, ((0, self.n_max_len - mat.shape[0]), (0, 0)), 'constant', constant_values=(0,))
 
     def _sentence_to_words(self, sentence):
         if not sentence or not sentence.strip():

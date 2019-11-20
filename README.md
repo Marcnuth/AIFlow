@@ -24,11 +24,19 @@ Ideally, we agree:
 
 #### MongoToCSVOperator
 
+#### Elastic2CSVOperator
+
 #### RegExLabellingOperator
 
 #### TextClassificationDataBuildOperator
 
 #### WeChatWorkRobotOperator
+
+### Units
+
+#### Doc2VecUnit
+
+#### Doc2MatUnit
 
 ## Tests & Examples
 

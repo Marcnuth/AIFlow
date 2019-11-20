@@ -2,7 +2,6 @@ from airflow.models import BaseOperator
 from pathlib import Path
 import json
 from bson import json_util
-from aiflow.hooks.mongo_hook import MongoHook
 from aiflow.units.doc2mat_unit import Doc2MatUnit
 import logging
 import pandas as pd
@@ -27,14 +26,14 @@ class TextClassificationDataBuildOperator(BaseOperator):
         self.output_data_dir = Path(output_data_dir)
         self.output_extra_file = Path(output_extra_file)
 
-        assert self.input_file.name.lower().endswith('csv'), f'"csv" input file required'
-        assert self.input_file.exists() and self.input_file.is_file, f'invalid input_file: {input_file}'
-
         n_max_words_count = kwargs.get('n_max_words_count', 5)
         self.doc2mat = Doc2MatUnit(n_max_words_count, word2vec_file, *args, **kwargs)
 
     def execute(self, context):
         logger.debug('start TextClassificationDataBuildOperator ...')
+
+        assert self.input_file.name.lower().endswith('csv'), f'input file must be CSV.'
+        assert self.input_file.exists() and self.input_file.is_file, f'invalid input_file: {input_file}'
 
         # prepare output env
         shutil.rmtree(self.output_data_dir, ignore_errors=True)
@@ -48,7 +47,10 @@ class TextClassificationDataBuildOperator(BaseOperator):
         n_vector_dim = 300
 
         ohlabels = pd.get_dummies(df[self.label_column])
-        ohlabels.idxmax(axis=1).to_json(self.output_extra_file)
+        with open(self.output_extra_file.absolute().as_posix(), 'w+') as f:
+            f.write(json.dumps(dict(
+                classes=list(ohlabels.columns)
+            )))
 
         for i, row in df.iterrows():
             val = row[self.data_column]

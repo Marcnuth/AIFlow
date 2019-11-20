@@ -102,6 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
 .metals/
 .DS_Store
 tests/resources/
+
+tests/resources/
+docker-compose.yml

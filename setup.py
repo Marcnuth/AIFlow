@@ -10,7 +10,7 @@ def read_file(filename, cb):
 
 setup(
     name='aiflow',
-    version='0.0.1',
+    version='1.0.0',
 
     packages=find_packages(),
     url='https://github.com/Marcnuth/aiflow',

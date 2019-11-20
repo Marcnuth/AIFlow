@@ -6,7 +6,7 @@ from airflow import DAG
 import airflow
 from datetime import timedelta
 from airflow.operators import PythonOperator
-from aiflow.operators import RegExLabellingOperator
+from aiflow.operators.regex_operator import RegExLabellingOperator
 import logging
 import re
 import pandas as pd
