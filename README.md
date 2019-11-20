@@ -26,6 +26,10 @@ Ideally, we agree:
 
 #### RegExLabellingOperator
 
+#### TextClassificationDataBuildOperator
+
+#### WeChatWorkRobotOperator
+
 ## Tests & Examples
 
 ### Example: Use Units to Build Your Castle
